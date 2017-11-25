@@ -26,8 +26,16 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>  {
 
+public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>  {
+    private void CargarLogo(String url, ImageView logos){
+        Glide.with(getBaseContext())
+                .load(url)
+                .override(60,60)
+                .centerCrop()
+                .error(R.drawable.ic_launcher_background)
+                .into(logos);
+    }
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
@@ -47,7 +55,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+        CargarLogo(mValues.get(position).id,holder.imageView);
         holder.mContentView.setText(mValues.get(position).content);
         holder.mAdressView.setText(mValues.get(position).details);
         holder.setOnclickListeners();
@@ -77,7 +85,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         //context
         Context context;
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
         public final TextView mAdressView;
         public final ImageView imageView;
@@ -88,7 +95,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             context=view.getContext();
             mView = view;
             imageView=(ImageView) view.findViewById(R.id.image);
-            mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.nombre);
             mAdressView=(TextView)view.findViewById(R.id.sede);
         }
